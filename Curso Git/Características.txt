@@ -1,0 +1,37 @@
+#**Características**#
+O projeto do Git é uma síntese da experiência de Torvalds com a manutenção do desenvolvimento altamente distribuído do projeto do Linux, junto com seu íntimo conhecimento de performance de sistemas de arquivos (conhecimentos adquiridos no mesmo projeto) e a necessidade urgente de produzir um sistema funcional em um curto espaço de tempo. Essas influências o levaram às seguintes escolhas de implementação:                                              
+
+### Suporte consistente para desenvolvimentos não lineares:
+O Git suporta rápidas criações de ramos (branches) e mesclas (merges), e inclui ferramentas específicas para visualização e navegação de históricos de desenvolvimento não lineares. Uma suposição intrínseca no Git é que uma mudança será mesclada mais do que é escrita, enquanto é passada por vários revisores.
+
+### Desenvolvimento distribuído:
+Assim como o Darcs, o BitKeeper, o Mercurial, o SVK, o Bazaar e o Monotone, o Git dá a cada desenvolvedor uma cópia local completa de todo o histórico de desenvolvimento, e as mudanças são copiadas de um único repositório para outro. 
+Estas mudanças são importadas como ramos (branches) adicionais de desenvolvimento, e podem sofrer uma mescla (merge) da mesma forma que um ramo de desenvolvimento local.
+
+### Compatibilidade com protocolos/sistemas existentes:
+Repositórios podem ser publicados por HTTP, FTP, rsync, um protocolo Git sobre uma porta conhecida ou por ssh. 
+O Git também tem uma emulação de servidor CVS, o que habilita a existência de clientes CVS e extensões (plugins) em diversos ADIs a utilizar os repositórios Git. O Subversion e o svk podem utilizar os repositórios diretamente com o git-svn.
+
+### Manipulação eficiente de projetos extensos:
+Torvalds descreveu o Git como sendo veloz e escalável,[24] e testes de performance realizados pela Mozilla apontaram que o Git é uma ordem de magnitude mais rápido que alguns sistemas de controle de versão. Obter o histórico das revisões salvos em repositórios locais resulta ser duas ordens de magnitude mais rápido que obtê-los de um servidor remoto. Um detalhe interessante é que o Git não fica mais lento com o aumento do histórico do projeto.
+
+### Autenticação criptográfica do histórico:
+O histórico do Git é salvo de uma maneira que o nome de uma determinada revisão (um "commit", ou entrega, nos termos do Git) depende de todo o histórico de desenvolvimento que leva até este commit. 
+Uma vez publicado, não é possível mudar as versões antigas sem passar despercebido. A estrutura é similar a uma árvore hash (hash tree), mas com dados adicionais nos nós e nas folhas (o Mercurial e o Monotone também possuem esta propriedade.).
+
+### Modelo baseado em ferramentas:
+O Git foi modelado como um conjunto de programas escrito em C, e numerosos scripts em shell que encapsulam estes programas. Embora muitos destes scripts tenham sido reescritos em C, como parte de um esforço de portar o Git para o Windows, o modelo básico continua,  sendo fácil agrupar seus componentes.
+
+### Estratégias de mescla (merge) conectáveis:
+Como parte de desenho em ferramentas, o Git tem um conjunto bem definido de modelos de uma mescla incompleta, e possuí vários algoritmos para completá-las, culminando em comunicar ao usuário que é incapaz de completar o merge automaticamente, sendo necessária uma edição manual.
+
+### O lixo se acumula se não for limpo:
+Abortar operações ou desfazer mudanças irá deixar objetos sem valor pendentes no banco de dados. 
+Existe porém uma pequena fração desejável de objetos no sempre crescente histórico, mas liberar o espaço usando git gc --prune pode ser uma operação lenta.
+
+### Empacotamento periódico explícito de objetos:
+O Git armazena cada novo objeto criado como um arquivo separado. Embora cada arquivo seja individualmente comprimido, isso requer um espaço considerável no disco e é ineficiente. 
+Isto é resolvido com o uso de "pacotes" que armazenam um grande número de objetos em um único arquivo (ou pela rede), comprimidos pelo delta entre eles. 
+Pacotes são comprimidos usando a heurística de que arquivos com o mesmo nome são provavelmente similares, mas que não dependam exatamente disso. 
+Mesmo assim, novos objetos criados (novo histórico adicionado) são gravados um a um, e reempacotamentos periódicos são necessários para manter o espaço de forma eficiente. 
+O Git faz reempacotamentos periódicos automaticamente, mas também é possível fazer reempacotamentos manuais com o comando git gc.

@@ -1,0 +1,15 @@
+#**Portabilidade**#
+
+O Git está primariamente desenvolvido para Linux, mas pode ser usado em outros sistemas operacionais baseados no Unix, incluindo o BSD, o Solaris e o Darwin. O Git é extremamente rápido em arquiteturas POSIX como o Linux. 
+O Git também roda no Microsoft Windows. Existem duas variantes:
+•	Uma adaptação nativa para Microsoft Windows, chamada msysgit (usando MSYS da MinGW). Ao passo que é relativamente mais vagaroso que a versão para o Linux, ele é rápido de forma aceitáve e é notoriamente usado em produção, com apenas algumas dificuldade menores. Em particular, alguns comandos ainda não estão disponíveis nas GUIs, e precisam ser chamadas por linha de comando.
+•	O git também roda em cima do Cygwin (uma camada de emulação POSIX), embora é notoriamente mais lento, especialmente para comando escritos em shell script Isto é causado principalmente pelo alto custo realizado pelo comando fork emulado pelo Cygwin. Entretanto, as recentes reescritas de vários comandos do Git (originalmente escritas em shell script) para a linguagem C, resultaram em um ganho significativo de performance no Windows. 
+Outras alternativas para rodar o Git inclui:
+•	git-cvsserver (que emula um servidor CVS, permitindo seu uso em cliente CVS para Windows): 
+•	Ambientes de desenvolvimento baseados em Eclipse para Git, baseado em implementações puras em Java no interior do Git: egit
+•	Suporte do NetBeans para o Git está em desenvolvimento e está também disponível pelo plugin NbGit
+•	O TortoiseGit, Git-Cheetah e o Git Extensions são extensões clientes para o Gerenciador de Arquivos do Windows, assim como versões independentes de GUI e o plugin para Visual Studio. O Git Source Control Provider é outro software gratuito em forma de plugin para o Visual Studio que exibe o status do projeto Git no 'solution explorer'.
+•	IntelliJ IDEA Versão 8.1 agora suporta o Git por um plugin embutido: Intellij Version Control Systems Integration
+•	Xcode 4 - assim como a versão 4 de demonstração, o git está disponível como parte da IDE 
+•	Git#é uma implementação .Net/Mono do git.
+Refatorar as operações de mais baixo nível em bibliotecas poderia, teoricamente, permitir a reimplementação do componente de níveis mais altos para o Windows sem reescrever o resto. 
